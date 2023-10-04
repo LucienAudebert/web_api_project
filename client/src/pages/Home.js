@@ -10,13 +10,39 @@ function Home() {
   //State
   const [data, setData] = React.useState(null);
   const [cartContent, setCart] = React.useState({});
+
+  
+  React.useEffect(() => {
+    try {
+      const cartContent = JSON.parse(localStorage.getItem('cartContent'));
+      if (cartContent) {
+        setCart(cartContent);
+       }
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
   
 
   React.useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
+      .then((data) => {
+        const dataCopy = data.slice();
+        dataCopy.map(dataPiece => dataPiece.quantity - 1)
+
+        setData(dataCopy);
+        return data;
+      })
       .then((data) => setData(data));
   }, []);
+
+  
+  React.useEffect(() => {
+    localStorage.setItem('cartContent', JSON.stringify(cartContent));
+  }, [cartContent]);
+  
+  
 
 
   // Behavior

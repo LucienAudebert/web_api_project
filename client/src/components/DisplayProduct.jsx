@@ -28,8 +28,6 @@ export default function DisplayProduct({productsInfo, setProducts, index, cart, 
             }
             setCart(cartCopy);
 
-            
-
         } else {
             alert("Product out of stock !"); //TODO: change this to something better
         }
