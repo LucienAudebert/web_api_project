@@ -2,27 +2,33 @@
 
 
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import DisplayProduct from "./components/DisplayProduct";
+import DisplayCart from "./components/DisplayCart";
 
 function App() {
+  //state
   const [data, setData] = React.useState(null);
+  const [cartContent, setCart] = React.useState([]);
 
+  //behaviour
   React.useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
       .then((data) => setData(data));
   }, []);
 
-
+  //render  TODO : use of displayproduct in map
   return (    
     <div className="App">
-      <header className="App-header">
-      <DisplayProduct productInfo={!data ? "Loading" : data[0]}/>
-      <DisplayProduct productInfo={!data ? "Loading" : data[1]}/>
-      <DisplayProduct productInfo={!data ? "Loading" : data[2]}/>
-      <DisplayProduct productInfo={!data ? "Loading" : data[3]}/>
+      <header className="Products">
+        <DisplayProduct productsInfo={!data ? "Loading" : data} setProducts={setData} index={0} cart={cartContent} setCart={setCart}/> 
+        <DisplayProduct productsInfo={!data ? "Loading" : data} setProducts={setData} index={1} cart={cartContent} setCart={setCart}/>
+        <DisplayProduct productsInfo  ={!data ? "Loading" : data} setProducts={setData} index={2} cart={cartContent} setCart={setCart}/>
+        <DisplayProduct productsInfo={!data ? "Loading" : data} setProducts={setData} index={3} cart={cartContent} setCart={setCart}/>
+      </header>
+      <header className="Cart">
+        <DisplayCart cart={cartContent} setCart={setCart}/>
       </header>
     </div>
   );
