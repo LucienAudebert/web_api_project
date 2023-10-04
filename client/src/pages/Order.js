@@ -1,16 +1,13 @@
-//https://www.geeksforgeeks.org/how-to-create-a-multi-page-website-using-react-js/
 import { useNavigate } from 'react-router-dom';
+import Form from "../components/Form";
  
 function Order(){
-
-    const navigate = useNavigate();
-
-
+    
     // Behavior
+    const navigate = useNavigate();
     const handleClick = () => {
       navigate('/');
     }
-
 
     // Display
     return (
@@ -18,6 +15,7 @@ function Order(){
             <h1>
                 This is the Order page.
             </h1>
+            <Form/>
             <button onClick={handleClick}>Cancel</button>
         </div>
     );
