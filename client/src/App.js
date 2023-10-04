@@ -4,6 +4,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import DisplayProduct from "./components/DisplayProduct";
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -11,14 +12,17 @@ function App() {
   React.useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
-      .then((data) => setData(data[0].name));
+      .then((data) => setData(data));
   }, []);
+
 
   return (    
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
+      <DisplayProduct productInfo={!data ? "Loading" : data[0]}/>
+      <DisplayProduct productInfo={!data ? "Loading" : data[1]}/>
+      <DisplayProduct productInfo={!data ? "Loading" : data[2]}/>
+      <DisplayProduct productInfo={!data ? "Loading" : data[3]}/>
       </header>
     </div>
   );
