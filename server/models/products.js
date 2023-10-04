@@ -19,4 +19,13 @@ const productSchema = new Schema({
 });
 
 const productModel = mongoose.model('Product', productSchema);
+
+async function createEntries() {
+	await productModel.create({ id: new mongoose.Types.ObjectId(), name: "Banane", quantity: 3, price: 2 });
+
+	await productModel.create({ id: new mongoose.Types.ObjectId(), name: "Cerise", quantity: 5, price: 8 });
+}
+
+createEntries();
+
 module.exports = { productModel };

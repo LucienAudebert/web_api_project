@@ -11,7 +11,7 @@ function App() {
   React.useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
-      .then((data) => setData(data.message));
+      .then((data) => setData(data[0].name));
   }, []);
 
   return (    
@@ -25,3 +25,4 @@ function App() {
 }
 
 export default App;
+
