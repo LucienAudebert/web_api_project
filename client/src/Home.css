@@ -9,7 +9,7 @@
 
 .Cart {
   background-color: #37435a;
-  min-height: 70vh;
+  min-height: 28vh;
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
