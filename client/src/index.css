@@ -11,3 +11,54 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Home {
+  background-color: #282c34;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: row;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Cart {
+  background-color: #37435a;
+  min-height: 28vh;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.DisplayCart {
+  background-color: #37435a;
+  min-height: 28vh;
+  display: flex;
+  flex-direction: row;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Product {
+  background-color: #3f444d;
+  font-size: calc(5px + 2vmin);
+  color: white;
+  border: 1px solid #ffffff;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+
+  margin: 20px;
+  padding: 10px;
+}
+
+.CartProduct {
+  background-color: #3f444d;
+  font-size: calc(5px + 2vmin);
+  color: white;
+  border: 1px solid #ffffff;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+
+  margin: 20px;
+  padding: 10px;
+}
