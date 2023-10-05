@@ -1,3 +1,5 @@
+import "../index.css"
+
 export default function DisplayProduct({productsInfo, setProducts, index, cart, setCart}) {
     //state
     const product = productsInfo[index];
@@ -5,24 +7,26 @@ export default function DisplayProduct({productsInfo, setProducts, index, cart, 
     //behaviour
     const handleClick = () => {
         const productsInfoCopy = productsInfo.slice();
-        const cartCopy = cart.slice();
+        const productCopy = productsInfoCopy[index];
+        const cartCopy = {...cart};
 
-        if (productsInfoCopy[index].quantity > 0) {
+        if (productCopy.quantity > 0) {
             //update product quantity
-            productsInfoCopy[index].quantity -= 1;
+            productCopy.quantity -= 1;
             setProducts(productsInfoCopy);
 
             //update cart
             //if in cart, update quantity
-            if (productsInfoCopy[index] in cartCopy) {
-
+            if (productCopy.name in cartCopy) {
+                cartCopy[productCopy.name].quantity += 1;
+            // if not in cart we add it
+            } else {
+                cartCopy[productCopy.name] = {
+                    name: productCopy.name, 
+                    quantity : 1
+                }
             }
-
-
-            //if not in cart, add it
-
             setCart(cartCopy);
-
 
         } else {
             alert("Product out of stock !"); //TODO: change this to something better
@@ -32,12 +36,12 @@ export default function DisplayProduct({productsInfo, setProducts, index, cart, 
   
     //render
     return (
-        <div>
+        <div className="Product">
             {product.name}<br/>
-            Price : {product.price}<br/>
+            Price : {product.price}€<br/>
             Available : {product.quantity}<br/>
 
-            <button onClick={handleClick}>Add to cart</button>
+            <button onClick={handleClick} disabled={product.quantity===0}>Add to cart</button>
         </div>
     );
   }
