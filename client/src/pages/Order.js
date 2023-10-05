@@ -61,11 +61,14 @@ function Order(){
                 <h3>
                     This is the Order page.
                 </h3>
-                <Form/>
+                
             </div>
             <div className="Cart">
                 <DisplayCart cart={cartContent} setCart={setCart} data={data} setData={setData}/>
             </div>
+            <br/>
+            <Form cart={cartContent}/>
+            <br/>
             <button onClick={handleClick}>Cancel</button>
         </div>
     );

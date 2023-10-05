@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function MyForm() {
+export default function MyForm({cart}) {
 
   // State
   const [name, setName] = useState("");
@@ -10,7 +10,9 @@ export default function MyForm() {
 
   // Behaviour
   const handleOnSubmit = async (event) => {
+
       event.preventDefault();
+      alert(JSON.stringify(cart));
       let result = await fetch(
       '/api/register', {
           method: "post",
@@ -22,11 +24,10 @@ export default function MyForm() {
                 name: name,
                 email: email,
                 address: address
-            }
+            },
+            cart: cart
         }),
       })
-      result = await result.json();
-      console.warn(result);
       if (result) {
           alert("Data saved succesfully");
           setEmail("");
@@ -39,11 +40,11 @@ export default function MyForm() {
   return (
     <form action="">
         <input type="text" placeholder="name"
-        value={name} onChange={(e) => setName(e.target.value)} />
+        value={name} onChange={(e) => setName(e.target.value)} /><br/>
         <input type="email" placeholder="email"
-        value={email} onChange={(e) => setEmail(e.target.value)} />
+        value={email} onChange={(e) => setEmail(e.target.value)} /><br/>
         <input type="text" placeholder="address"
-        value={address} onChange={(e) => setAddress(e.target.value)} />
+        value={address} onChange={(e) => setAddress(e.target.value)} /><br/>
         <button type="submit"
         onClick={handleOnSubmit}>submit</button>
     </form>
