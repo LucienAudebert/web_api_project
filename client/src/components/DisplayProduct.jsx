@@ -7,8 +7,8 @@ export default function DisplayProduct({productsInfo, setProducts, index, cart, 
     //behaviour
     const handleClick = () => {
         const productsInfoCopy = productsInfo.slice();
-        const productCopy = productsInfoCopy[index]
-        const cartCopy = {...cart}
+        const productCopy = productsInfoCopy[index];
+        const cartCopy = {...cart};
 
         if (productCopy.quantity > 0) {
             //update product quantity
@@ -41,7 +41,7 @@ export default function DisplayProduct({productsInfo, setProducts, index, cart, 
             Price : {product.price}€<br/>
             Available : {product.quantity}<br/>
 
-            <button onClick={handleClick}>Add to cart</button>
+            <button onClick={handleClick} disabled={product.quantity===0}>Add to cart</button>
         </div>
     );
   }

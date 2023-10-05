@@ -19,22 +19,35 @@ function Home() {
         setCart(cartContent);
        }
     } catch (error) {
-      alert(error);
+      alert(error)
     }
+
+    fetch("/api")
+      .then((res) => res.json())
+      .then((data) => {
+        try {
+        const cartContent = JSON.parse(localStorage.getItem('cartContent'));
+        const dataCopy = data.slice();
+        for (let i=0; i<dataCopy.length; i++) {
+          if (dataCopy[i].name in cartContent) {
+            dataCopy[i].quantity -= cartContent[dataCopy[i].name].quantity;
+          }
+          
+        }
+
+        setData(dataCopy);
+        return data;
+      } catch (error) {
+        alert(error);
+        return data;
+      }
+      })
+      .then((data) => setData(data));
   }, []);
   
 
   React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => {
-        const dataCopy = data.slice();
-        dataCopy.map(dataPiece => dataPiece.quantity - 1)
-
-        setData(dataCopy);
-        return data;
-      })
-      .then((data) => setData(data));
+    
   }, []);
 
   
@@ -62,7 +75,7 @@ function Home() {
         <DisplayProduct productsInfo={!data ? "Loading" : data} setProducts={setData} index={3} cart={cartContent} setCart={setCart}/>
       </div>
       <div className="Cart">
-        <DisplayCart cart={cartContent}/>
+        <DisplayCart cart={cartContent} setCart={setCart} data={data} setData={setData}/>
       </div>
       <button onClick={handleClick}>Validate</button>
      
