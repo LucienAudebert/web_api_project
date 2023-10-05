@@ -44,11 +44,6 @@ function Home() {
       })
       .then((data) => setData(data));
   }, []);
-  
-
-  React.useEffect(() => {
-    
-  }, []);
 
   
   React.useEffect(() => {
@@ -67,7 +62,7 @@ function Home() {
 
   // Display
   return (    
-    <div className="App">
+    <div >
       <div className="Home">
         <DisplayProduct productsInfo={!data ? "Loading" : data} setProducts={setData} index={0} cart={cartContent} setCart={setCart}/> 
         <DisplayProduct productsInfo={!data ? "Loading" : data} setProducts={setData} index={1} cart={cartContent} setCart={setCart}/>
