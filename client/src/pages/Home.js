@@ -21,24 +21,24 @@ function Home() {
 
         fetch('/api')
             .then((res) => res.json())
-            .then((data) => {
+            .then((products) => {
                 try {
                     const cartContent = JSON.parse(localStorage.getItem('cartContent'));
-                    const dataCopy = data.slice();
-                    for (let i = 0; i < dataCopy.length; i++) {
-                        if (dataCopy[i].name in cartContent) {
-                            dataCopy[i].quantity -= cartContent[dataCopy[i].name].quantity;
+                    const productsCopy = products.slice();
+                    for (let i = 0; i < productsCopy.length; i++) {
+                        if (productsCopy[i].name in cartContent) {
+                            productsCopy[i].quantity -= cartContent[productsCopy[i].name].quantity;
                         }
                     }
 
-                    setProduct(dataCopy);
-                    return data;
+                    setProduct(productsCopy);
+                    return products;
                 } catch (error) {
                     alert(error);
-                    return data;
+                    return products;
                 }
             })
-            .then((data) => setProduct(data));
+            .then((products) => setProduct(products));
     }, []);
 
     React.useEffect(() => {
@@ -85,7 +85,7 @@ function Home() {
                 />
             </div>
             <div className="Cart">
-                <DisplayCart cart={cartContent} setCart={setCart} data={product} setData={setProduct} />
+                <DisplayCart cart={cartContent} setCart={setCart} product={product} setProduct={setProduct} />
             </div>
             <button onClick={handleClick}>Validate</button>
         </div>

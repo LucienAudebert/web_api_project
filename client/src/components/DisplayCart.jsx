@@ -2,19 +2,19 @@ import "../index.css"
 
 import CartProduct from "./CartProduct";
 
-export default function DisplayCart({cart, setCart, data, setData}) {
+export default function DisplayCart({cart, setCart, product, setProduct}) {
     //state
 
     //behaviour
     const handleClick = () => {
-        const dataCopy = data.slice();
-        for (let i=0; i<dataCopy.length; i++) {
-          if (dataCopy[i].name in cart) {
-            dataCopy[i].quantity += cart[dataCopy[i].name].quantity;
+        const productCopy = product.slice();
+        for (let i=0; i<productCopy.length; i++) {
+          if (productCopy[i].name in cart) {
+            productCopy[i].quantity += cart[productCopy[i].name].quantity;
           }
           
         }
-        setData(dataCopy);
+        setProduct(productCopy);
       setCart({});
     }
 
