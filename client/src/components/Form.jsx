@@ -29,7 +29,6 @@ export default function MyForm({cart}) {
         }),
       })
       if (result) {
-          alert("Data saved succesfully");
           setEmail("");
           setName("");
           setAddress("");

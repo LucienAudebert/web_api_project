@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node controllers/index.js",
+    "start": "node index.js",
     "prettier": "prettier --write \"**/*.js\"",
     "prettier:check": "prettier --check \"**/*.js\""
   },

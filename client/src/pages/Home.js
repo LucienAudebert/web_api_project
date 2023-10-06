@@ -23,6 +23,7 @@ function Home() {
             .then((res) => res.json())
             .then((products) => {
                 try {
+                    console.log(products);
                     const cartContent = JSON.parse(localStorage.getItem('cartContent'));
                     const productsCopy = products.slice();
                     for (let i = 0; i < productsCopy.length; i++) {
