@@ -1,6 +1,5 @@
 // client/src/App.js
-
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Order from './pages/Order';
@@ -15,4 +14,3 @@ export default function App() {
         </BrowserRouter>
     );
 }
-ReactDOM.render(<App />, document.getElementById('root'));

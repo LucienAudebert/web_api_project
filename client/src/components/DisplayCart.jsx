@@ -3,27 +3,28 @@ import "../index.css"
 import CartProduct from "./CartProduct";
 
 export default function DisplayCart({cart, setCart, product, setProduct}) {
-    //state
+    // State
 
-    //behaviour
+    // Behaviour
+
+    // Function called after clicking on button 'Empty Cart'
     const handleClick = () => {
         const productCopy = product.slice();
         for (let i=0; i<productCopy.length; i++) {
           if (productCopy[i].name in cart) {
             productCopy[i].quantity += cart[productCopy[i].name].quantity;
           }
-          
         }
         setProduct(productCopy);
       setCart({});
     }
 
-    //render
+    // Display
     return (<div >
         <div className="DisplayCart">
           {
             Object.keys(cart).map((key, index) => ( 
-              <CartProduct product={cart[key]}/>
+              <CartProduct product={cart[key]} key={index}/>
             ))
           }
         </div>

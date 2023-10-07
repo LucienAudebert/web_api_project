@@ -5,47 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import Form from '../components/Form';
 
 function Order() {
+    // State
     const [product, setProduct] = React.useState(null);
-    const [cartContent, setCart] = React.useState({});
-
-    React.useEffect(() => {
-        try {
-            const cartContent = JSON.parse(localStorage.getItem('cartContent'));
-            if (cartContent) {
-                setCart(cartContent);
-            }
-        } catch (error) {
-            alert(error);
-        }
-
-        fetch('/api')
-            .then((res) => res.json())
-            .then((products) => {
-                try {
-                    const cartContent = JSON.parse(localStorage.getItem('cartContent'));
-                    const productsCopy = products.slice();
-                    for (let i = 0; i < productsCopy.length; i++) {
-                        if (productsCopy[i].name in cartContent) {
-                            productsCopy[i].quantity -= cartContent[productsCopy[i].name].quantity;
-                        }
-                    }
-
-                    setProduct(productsCopy);
-                    return products;
-                } catch (error) {
-                    alert(error);
-                    return products;
-                }
-            })
-            .then((products) => setProduct(products));
-    }, []);
-
-    React.useEffect(() => {
-        localStorage.setItem('cartContent', JSON.stringify(cartContent));
-    }, [cartContent]);
+    const [cartContent, setCart] = React.useState(JSON.parse(localStorage.getItem('cartContent'))); // initializing with what is in local storage
+    const navigate = useNavigate();
 
     // Behavior
-    const navigate = useNavigate();
+    // Redirecting on home page after clicking on button 'cancel'
     const handleClick = () => {
         navigate('/');
     };
