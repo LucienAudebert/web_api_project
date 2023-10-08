@@ -2,33 +2,44 @@ import "../index.css"
 
 import CartProduct from "./CartProduct";
 
-export default function DisplayCart({cart, setCart, data, setData}) {
-    //state
+export default function DisplayCart({cart, setCart, product, setProduct}) {
+    // State
 
-    //behaviour
-    const handleClick = () => {
-        const dataCopy = data.slice();
-        for (let i=0; i<dataCopy.length; i++) {
-          if (dataCopy[i].name in cart) {
-            dataCopy[i].quantity += cart[dataCopy[i].name].quantity;
+    // Behaviour
+
+    // Function called after clicking on button 'Empty Cart'
+    const handleClickEmpty = () => {
+        const productCopy = product.slice();
+
+        if (cart !== null) {
+          for (let i=0; i<productCopy.length; i++) {
+            if (productCopy[i].name in cart) {
+              productCopy[i].quantity += cart[productCopy[i].name].quantity;
+            }
           }
-          
         }
-        setData(dataCopy);
+        
+        setProduct(productCopy);
       setCart({});
     }
 
-    //render
+    // Display
     return (<div >
         <div className="DisplayCart">
-          {
-            Object.keys(cart).map((key, index) => ( 
-              <CartProduct product={cart[key]}/>
+        {
+          cart !== null && cart !== undefined ?
+          (
+            Object.keys(cart).map((key, index) => (
+              <CartProduct product={cart[key]} key={index} />
             ))
-          }
+          )
+          : ( <p>Your cart is empty</p>)
+          
+      }
         </div>
+       
         <div>
-          <button onClick={handleClick}>Empty cart</button>
+          <button onClick={handleClickEmpty}>Empty cart</button>
         </div>
         
     </div>);

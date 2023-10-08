@@ -1,10 +1,10 @@
 import "../index.css"
 
 export default function DisplayProduct({productsInfo, setProducts, index, cart, setCart}) {
-    //state
+    // State
     const product = productsInfo[index];
 
-    //behaviour
+    // Behaviour
     const handleClick = () => {
         const productsInfoCopy = productsInfo.slice();
         const productCopy = productsInfoCopy[index];
@@ -34,7 +34,7 @@ export default function DisplayProduct({productsInfo, setProducts, index, cart, 
         
     }
   
-    //render
+    // Display
     return (
         <div className="Product">
             {product.name}<br/>

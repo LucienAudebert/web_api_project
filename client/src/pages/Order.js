@@ -1,75 +1,60 @@
-import React from "react"; 
-import DisplayCart from "../components/DisplayCart";
-import "../index.css"
+import React from 'react';
+import DisplayCart from '../components/DisplayCart';
+import '../index.css';
 import { useNavigate } from 'react-router-dom';
-import Form from "../components/Form";
- 
 
-function Order(){
-
-    const [data, setData] = React.useState(null);
-    const [cartContent, setCart] = React.useState({});
-
-    React.useEffect(() => {
-        try {
-          const cartContent = JSON.parse(localStorage.getItem('cartContent'));
-          if (cartContent) {
-            setCart(cartContent);
-           }
-        } catch (error) {
-          alert(error)
-        }
-    
-        fetch("/api")
-          .then((res) => res.json())
-          .then((data) => {
-            try {
-            const cartContent = JSON.parse(localStorage.getItem('cartContent'));
-            const dataCopy = data.slice();
-            for (let i=0; i<dataCopy.length; i++) {
-              if (dataCopy[i].name in cartContent) {
-                dataCopy[i].quantity -= cartContent[dataCopy[i].name].quantity;
-              }
-              
-            }
-    
-            setData(dataCopy);
-            return data;
-          } catch (error) {
-            alert(error);
-            return data;
-          }
-          })
-          .then((data) => setData(data));
-      }, []);
-    
-      
-      React.useEffect(() => {
-        localStorage.setItem('cartContent', JSON.stringify(cartContent));
-      }, [cartContent]);
+function Order() {
+    // State
+    const [product, setProduct] = React.useState(null);
+    const [cartContent, setCart] = React.useState(JSON.parse(localStorage.getItem('cartContent'))); // initializing with what is in local storage
+    const navigate = useNavigate();
 
     // Behavior
-    const navigate = useNavigate();
-    const handleClick = () => {
-      navigate('/');
-    }
+    const handleClickCancel = () => {
+        navigate('/products');
+    };
+
+    const handleClickConfirm = () => {
+        fetch('/api/order', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cart: cartContent
+            })
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('HTTP Error ' + response.status);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data === 'Cart is valid') {
+                    localStorage.clear();
+                    setCart({});
+                }
+            })
+            .catch((error) => {
+                console.error('Error :', error);
+            });
+    };
 
     // Display
     return (
         <div>
-            <div className='Order'>
-                <h3>
-                    This is the Order page.
-                </h3>
-                <Form/>
+            <div className="Order">
+                <h3>This is the Order page.</h3>
             </div>
             <div className="Cart">
-                <DisplayCart cart={cartContent} setCart={setCart} data={data} setData={setData}/>
+                <DisplayCart cart={cartContent} setCart={setCart} product={product} setProduct={setProduct} />
             </div>
-            <button onClick={handleClick}>Cancel</button>
+            <button onClick={handleClickCancel}>Cancel</button>
+            <br />
+            <button onClick={handleClickConfirm}>Confirm your cart</button>
         </div>
     );
-};
-
+}
 
 export default Order;
