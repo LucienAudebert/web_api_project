@@ -4,29 +4,32 @@ import DisplayCart from '../components/DisplayCart';
 import { useNavigate } from 'react-router-dom';
 import '../index.css';
 
-function Home() {
+function Products() {
     // State
     const [product, setProduct] = React.useState(null);
-    const [cartContent, setCart] = React.useState(JSON.parse(localStorage.getItem('cartContent'))); // initializing with what is in local storage
+
+    // initializing cartContent at {} if localStorage is empty, else set value with what is in local storage
+    const [cartContent, setCart] = React.useState(
+        localStorage.getItem('cartContent') === 'null' ? {} : JSON.parse(localStorage.getItem('cartContent'))
+    );
     const navigate = useNavigate();
 
     // Behavior
-    // Redirecting on page /order after validating cart
-    const handleClick = () => {
+    const handleClickOK = () => {
         navigate('/order');
     };
 
     // This useEffect is executed when cartContent is modified (ex: when clicking on button 'add to cart' or 'empty cart')
     // because cartContent is set as a dependency
     React.useEffect(() => {
-        fetch('/api')
+        fetch('/api/products')
             .then((res) => res.json())
             .then((products) => {
                 try {
                     // Update available quantity display after adding products in cart
                     const productsCopy = products.slice();
                     for (let i = 0; i < productsCopy.length; i++) {
-                        if (productsCopy[i].name in cartContent) {
+                        if (cartContent !== null && productsCopy[i].name in cartContent) {
                             productsCopy[i].quantity -= cartContent[productsCopy[i].name].quantity;
                         }
                     }
@@ -34,13 +37,13 @@ function Home() {
                     setProduct(productsCopy);
                     return products;
                 } catch (error) {
-                    alert(error);
+                    alert(error); // TODO: improve error handling
                 }
             })
             .then((products) => setProduct(products));
     }, [cartContent]);
 
-    // This useEffect is executed when carContent changed to update local storage
+    // This useEffect is executed when cartContent changed to update local storage
     React.useEffect(() => {
         localStorage.setItem('cartContent', JSON.stringify(cartContent));
     }, [cartContent]);
@@ -81,9 +84,9 @@ function Home() {
             <div className="Cart">
                 <DisplayCart cart={cartContent} setCart={setCart} product={product} setProduct={setProduct} />
             </div>
-            <button onClick={handleClick}>Validate</button>
+            <button onClick={handleClickOK}>OK</button>
         </div>
     );
 }
 
-export default Home;
+export default Products;

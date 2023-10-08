@@ -1,10 +1,11 @@
 const express = require('express');
-const indexController = require('../controllers/index');
-const orderController = require('../controllers/order');
+const productController = require('../controllers/products');
+const userController = require('../controllers/users');
 
 const router = express.Router();
 
-router.route('/api').get(indexController.homePage);
-//router.route('/api/register').get(orderController.analyzeOrder);
+router.route('/api').post(userController.storeUser);
+router.route('/api/products').get(productController.getAllProducts);
+router.route('/api/order').post(productController.validateCart);
 
 module.exports = router;

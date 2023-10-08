@@ -1,37 +1,48 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
-export default function MyForm({cart}) {
+export default function MyForm() {
 
   // State
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const navigate = useNavigate();
 
 
   // Behaviour
   const handleOnSubmit = async (event) => {
 
       event.preventDefault();
-      alert(JSON.stringify(cart));
-      let result = await fetch(
-      '/api/register', {
-          method: "post",
-          headers: {
-            'Content-Type': 'application/json'
-        },
-          body: JSON.stringify( {
-            user: {
-                name: name,
-                email: email,
-                address: address
+      navigate("/products");
+
+      //alert(JSON.stringify(cart));
+
+      try{
+        let result = await fetch(
+          '/api', {
+              method: "post",
+              headers: {
+                'Content-Type': 'application/json'
             },
-            cart: cart
-        }),
-      })
-      if (result) {
-          setEmail("");
-          setName("");
-          setAddress("");
+              body: JSON.stringify( {
+                user: {
+                    name: name,
+                    email: email,
+                    address: address
+                }
+            }),
+          })
+
+          if (result) {
+            setEmail("");
+            setName("");
+            setAddress("");
+        }
+        
+      }
+      catch(err){
+        alert(err); // TODO: improve error handling
       }
   }
 

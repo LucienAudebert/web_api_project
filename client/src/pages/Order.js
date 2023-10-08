@@ -2,7 +2,6 @@ import React from 'react';
 import DisplayCart from '../components/DisplayCart';
 import '../index.css';
 import { useNavigate } from 'react-router-dom';
-import Form from '../components/Form';
 
 function Order() {
     // State
@@ -11,9 +10,35 @@ function Order() {
     const navigate = useNavigate();
 
     // Behavior
-    // Redirecting on home page after clicking on button 'cancel'
-    const handleClick = () => {
-        navigate('/');
+    const handleClickCancel = () => {
+        navigate('/products');
+    };
+
+    const handleClickConfirm = () => {
+        fetch('/api/order', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cart: cartContent
+            })
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('HTTP Error ' + response.status);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data === 'Cart is valid') {
+                    localStorage.clear();
+                    setCart({});
+                }
+            })
+            .catch((error) => {
+                console.error('Error :', error);
+            });
     };
 
     // Display
@@ -25,10 +50,9 @@ function Order() {
             <div className="Cart">
                 <DisplayCart cart={cartContent} setCart={setCart} product={product} setProduct={setProduct} />
             </div>
+            <button onClick={handleClickCancel}>Cancel</button>
             <br />
-            <Form cart={cartContent} />
-            <br />
-            <button onClick={handleClick}>Cancel</button>
+            <button onClick={handleClickConfirm}>Confirm your cart</button>
         </div>
     );
 }
