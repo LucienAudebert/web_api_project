@@ -32,7 +32,7 @@ app.use((error, req, res, next) => {
     error_message = {
         error: error.status,
         message: error.message,
-        stacktrace: error.stack
+        //stacktrace: error.stack
     };
 
     res.json(error_message);
