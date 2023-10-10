@@ -21,7 +21,8 @@ function Order() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                cart: cartContent
+                cart: cartContent,
+                email: JSON.parse(localStorage.getItem('email'))
             })
         })
             .then((response) => {
@@ -32,8 +33,9 @@ function Order() {
             })
             .then((data) => {
                 if (data === 'Cart is valid') {
-                    localStorage.clear();
+                    localStorage.removeItem('cartContent');
                     setCart({});
+                    navigate('/confirm');
                 }
             })
             .catch((error) => {

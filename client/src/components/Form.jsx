@@ -39,6 +39,7 @@ export default function MyForm() {
             setAddress("");
           }
           else{ // Go to next page if user information is valid
+            localStorage.setItem('email', JSON.stringify(email)); // store email user in localStorage
             navigate("/products");
           }
       }
@@ -52,11 +53,11 @@ export default function MyForm() {
     <div>
       <form action="">
         <input type="text" placeholder="name"
-        value={name} onChange={(e) => setName(e.target.value)} /><br/>
+        value={name} onChange={(e) => setName(e.target.value)}/><br/>
         <input type="email" placeholder="email"
-        value={email} onChange={(e) => setEmail(e.target.value)} /><br/>
+        value={email} onChange={(e) => setEmail(e.target.value)}/><br/>
         <input type="text" placeholder="address"
-        value={address} onChange={(e) => setAddress(e.target.value)} /><br/>
+        value={address} onChange={(e) => setAddress(e.target.value)}/><br/>
         <button type="submit"
         onClick={handleOnSubmit}>submit</button>
     </form>

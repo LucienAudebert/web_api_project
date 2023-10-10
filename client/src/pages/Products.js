@@ -19,6 +19,11 @@ function Products() {
         navigate('/order');
     };
 
+    const handleClickLogOut = () => {
+        localStorage.clear();
+        navigate('/');
+    };
+
     // This useEffect is executed when cartContent is modified (ex: when clicking on button 'add to cart' or 'empty cart')
     // because cartContent is set as a dependency
     React.useEffect(() => {
@@ -85,6 +90,7 @@ function Products() {
                 <DisplayCart cart={cartContent} setCart={setCart} product={product} setProduct={setProduct} />
             </div>
             <button onClick={handleClickOK}>OK</button>
+            <button onClick={handleClickLogOut}>Log out</button>
         </div>
     );
 }
