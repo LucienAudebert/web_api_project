@@ -15,6 +15,11 @@ function Order() {
     };
 
     const handleClickConfirm = () => {
+        
+        if(JSON.parse(localStorage.getItem('email')) === null){
+            navigate('/')
+            return
+        }
         fetch('/api/order', {
             method: 'post',
             headers: {
@@ -52,7 +57,7 @@ function Order() {
             <div className="Cart">
                 <DisplayCart cart={cartContent} setCart={setCart} product={product} setProduct={setProduct} />
             </div>
-            <button onClick={handleClickCancel}>Cancel</button>
+            <button onClick={handleClickCancel}>Go Back</button>
             <br />
             <button onClick={handleClickConfirm}>Confirm your cart</button>
         </div>

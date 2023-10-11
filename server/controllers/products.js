@@ -48,7 +48,7 @@ async function storeOrder(email, cart){
     
         if(order){
              // order has been created
-             console.log('POST created new order: ' + order);
+             //console.log('POST created new order: ' + order);
         }
     }
     catch(err){
@@ -88,7 +88,6 @@ async function updateQuantity(cart) {
                 { name: cart[key].name },
                 { $set: { quantity: updatedQuantity } }
             );
-            console.log('Update successful', result);
         } catch (error) {
             console.error('Error during update :', error);
         }

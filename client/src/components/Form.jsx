@@ -51,15 +51,14 @@ export default function MyForm() {
   // Display
   return (
     <div>
-      <form action="">
-        <input type="text" placeholder="name"
+      <form action="" onSubmit={handleOnSubmit}>
+        <input type="text" placeholder="name" required
         value={name} onChange={(e) => setName(e.target.value)}/><br/>
-        <input type="email" placeholder="email"
+        <input type="email" placeholder="email" required
         value={email} onChange={(e) => setEmail(e.target.value)}/><br/>
-        <input type="text" placeholder="address"
+        <input type="text" placeholder="address" required
         value={address} onChange={(e) => setAddress(e.target.value)}/><br/>
-        <button type="submit"
-        onClick={handleOnSubmit}>submit</button>
+        <input type="submit" value="Submit"/>
     </form>
       {errorMessage && <div className="Error">{errorMessage}</div>}
     </div>

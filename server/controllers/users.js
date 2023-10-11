@@ -23,7 +23,7 @@ const storeUser = async (req, res, next) => {
     
                 if(user){
                     // user has been created
-                    console.log('POST created new user: ' + user);
+                    //console.log('POST created new user: ' + user);
                 }
             }
             catch(err){

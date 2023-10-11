@@ -1,8 +1,10 @@
 import "../index.css"
+import { useState } from "react";
 
 export default function DisplayProduct({productsInfo, setProducts, index, cart, setCart}) {
     // State
     const product = productsInfo[index];
+    const [errorMessage, setErrorMessage] = useState("");
 
     // Behaviour
     const handleClick = () => {
@@ -29,7 +31,7 @@ export default function DisplayProduct({productsInfo, setProducts, index, cart, 
             setCart(cartCopy);
 
         } else {
-            alert("Product out of stock !"); //TODO: change this to something better
+            setErrorMessage("Product out of stock !")
         }
         
     }
@@ -42,6 +44,7 @@ export default function DisplayProduct({productsInfo, setProducts, index, cart, 
             Available : {product.quantity}<br/>
 
             <button onClick={handleClick} disabled={product.quantity===0}>Add to cart</button>
+            {errorMessage && <div className="Error">{errorMessage}</div>}
         </div>
     );
   }
