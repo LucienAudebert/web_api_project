@@ -29,13 +29,13 @@ app.use((error, req, res, next) => {
     }
     res.status(error.status);
 
-    error_message = {
-        error: error.status,
+    err = {
+        status: error.status,
         message: error.message,
         stacktrace: error.stack
     };
 
-    res.json(error_message);
+    console.error("Error: Status: ", err.status, "  |  Message: ", err.message, "  |  StackTrace: ", err.stacktrace);
 });
 
 app.listen(PORT, () => {

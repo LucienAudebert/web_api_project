@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const productModel = require('../models/products').productModel;
+const orderModel = require('../models/orders').orderModel;
 
 const getAllProducts = (req, res, next) => {
     productModel
@@ -17,6 +18,7 @@ const getAllProducts = (req, res, next) => {
 const validateCart = (req, res, next) => {
     try {
         if (isValidCart(req.body.cart)) {
+            storeOrder(req.body.email, req.body.cart);
             res.json('Cart is valid');
         } else {
             res.json('Cart is invalid');
@@ -31,16 +33,29 @@ async function isValidCart(cart) {
         updateQuantity(cart);
         return true;
     } else {
-        //if not valid -> notify user
         return false;
     }
-
-    ////create entry in commands
-
-    ////create or update entry in users
-
-    ////notify user
 }
+
+async function storeOrder(email, cart){
+
+    try{
+        const order = await orderModel.create({
+            _id: new mongoose.Types.ObjectId(),
+            email: email,
+            cart: cart
+        })
+    
+        if(order){
+             // order has been created
+             //console.log('POST created new order: ' + order);
+        }
+    }
+    catch(err){
+        console.error('Error: ', err);
+    }
+}
+
 
 async function isQuantityAvailable(cart) {
     let isValid = true;
@@ -73,11 +88,11 @@ async function updateQuantity(cart) {
                 { name: cart[key].name },
                 { $set: { quantity: updatedQuantity } }
             );
-            console.log('Update successful', result);
         } catch (error) {
             console.error('Error during update :', error);
         }
     }
 }
+
 
 module.exports = { validateCart, getAllProducts };

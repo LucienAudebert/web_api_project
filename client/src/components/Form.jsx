@@ -7,19 +7,15 @@ export default function MyForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
 
   // Behaviour
   const handleOnSubmit = async (event) => {
-
       event.preventDefault();
-      navigate("/products");
-
-      //alert(JSON.stringify(cart));
-
       try{
-        let result = await fetch(
+        const res = await fetch(
           '/api', {
               method: "post",
               headers: {
@@ -32,31 +28,39 @@ export default function MyForm() {
                     address: address
                 }
             }),
-          })
+          });
 
-          if (result) {
+          const data = await res.json();
+
+          if(data.message !== "OK"){
+            setErrorMessage("Sorry, this email already exists. Please enter a new one.");
             setEmail("");
             setName("");
             setAddress("");
-        }
-        
+          }
+          else{ // Go to next page if user information is valid
+            localStorage.setItem('email', JSON.stringify(email)); // store email user in localStorage
+            navigate("/products");
+          }
       }
       catch(err){
-        alert(err); // TODO: improve error handling
+        setErrorMessage(err);
       }
   }
 
   // Display
   return (
-    <form action="">
-        <input type="text" placeholder="name"
-        value={name} onChange={(e) => setName(e.target.value)} /><br/>
-        <input type="email" placeholder="email"
-        value={email} onChange={(e) => setEmail(e.target.value)} /><br/>
-        <input type="text" placeholder="address"
-        value={address} onChange={(e) => setAddress(e.target.value)} /><br/>
-        <button type="submit"
-        onClick={handleOnSubmit}>submit</button>
+    <div>
+      <form action="" onSubmit={handleOnSubmit}>
+        <input type="text" placeholder="name" required
+        value={name} onChange={(e) => setName(e.target.value)}/><br/>
+        <input type="email" placeholder="email" required
+        value={email} onChange={(e) => setEmail(e.target.value)}/><br/>
+        <input type="text" placeholder="address" required
+        value={address} onChange={(e) => setAddress(e.target.value)}/><br/>
+        <input type="submit" value="Submit"/>
     </form>
+      {errorMessage && <div className="Error">{errorMessage}</div>}
+    </div>
   )
 }

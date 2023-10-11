@@ -15,13 +15,19 @@ function Order() {
     };
 
     const handleClickConfirm = () => {
+        
+        if(JSON.parse(localStorage.getItem('email')) === null){
+            navigate('/')
+            return
+        }
         fetch('/api/order', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                cart: cartContent
+                cart: cartContent,
+                email: JSON.parse(localStorage.getItem('email'))
             })
         })
             .then((response) => {
@@ -32,8 +38,9 @@ function Order() {
             })
             .then((data) => {
                 if (data === 'Cart is valid') {
-                    localStorage.clear();
+                    localStorage.removeItem('cartContent');
                     setCart({});
+                    navigate('/confirm');
                 }
             })
             .catch((error) => {
@@ -50,7 +57,7 @@ function Order() {
             <div className="Cart">
                 <DisplayCart cart={cartContent} setCart={setCart} product={product} setProduct={setProduct} />
             </div>
-            <button onClick={handleClickCancel}>Cancel</button>
+            <button onClick={handleClickCancel}>Go Back</button>
             <br />
             <button onClick={handleClickConfirm}>Confirm your cart</button>
         </div>
