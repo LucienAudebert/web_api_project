@@ -5,7 +5,6 @@ require('./models/db'); // connexion to database
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -35,7 +34,7 @@ app.use((error, req, res, next) => {
         stacktrace: error.stack
     };
 
-    console.error("Error: Status: ", err.status, "  |  Message: ", err.message, "  |  StackTrace: ", err.stacktrace);
+    console.error('Error: Status: ', err.status, '  |  Message: ', err.message, '  |  StackTrace: ', err.stacktrace);
 });
 
 app.listen(PORT, () => {

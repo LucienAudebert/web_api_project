@@ -2,14 +2,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../index.css';
 
-function Confirm(){
-
+function Confirm() {
     const navigate = useNavigate();
 
     // Behavior
     const handleClickGoBack = () => {
         navigate('/products');
-    }
+    };
 
     // Display
     return (
@@ -17,7 +16,7 @@ function Confirm(){
             <h3>Thank you for your order !</h3>
             <button onClick={handleClickGoBack}>Go back</button>
         </div>
-    )
+    );
 }
 
 export default Confirm;

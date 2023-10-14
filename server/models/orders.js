@@ -12,7 +12,6 @@ const orderSchema = new Schema({
         type: Schema.Types.Mixed,
         default: {},
         required: true
-        
     }
 });
 
