@@ -1,6 +1,5 @@
-const mongoose = require('mongoose');
+const axios = require('axios');
 const productModel = require('../models/products').productModel;
-const orderModel = require('../models/orders').orderModel;
 
 const getAllProducts = (req, res, next) => {
     productModel
@@ -15,60 +14,43 @@ const getAllProducts = (req, res, next) => {
 }
 
 
-const validateCart = (req, res, next) => {
-    try {
-        if (isValidCart(req.body.cart)) {
-            storeOrder(req.body.email, req.body.cart);
-            res.json('Cart is valid');
-        } else {
-            res.json('Cart is invalid');
-        }
-    } catch (err) {
-        next(err);
-    }
-};
+const checkCart = (req, res, next) => {
+    let cart = req.body.cart;
+    let email = req.body.email;
 
-async function isValidCart(cart) {
     if (isQuantityAvailable(cart)) {
         updateQuantity(cart);
-        return true;
-    } else {
-        return false;
-    }
-}
 
-async function storeOrder(email, cart){
-
-    try{
-        const order = await orderModel.create({
-            _id: new mongoose.Types.ObjectId(),
+        // Send information to order controller via route to store the order
+        axios.post('http://127.0.0.1:3000/api/valid', {
             email: email,
             cart: cart
         })
-    
-        if(order){
-             // order has been created
-             //console.log('POST created new order: ' + order);
-        }
+        .then((postRes) => {
+            res.json(postRes.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+            
+    } else {
+        res.status(400).json('Sorry, your order is invalid. Some products that you ordered are not available at the moment.');
     }
-    catch(err){
-        console.error('Error: ', err);
-    }
-}
+};
 
 
 async function isQuantityAvailable(cart) {
     let isValid = true;
     for (let key of Object.keys(cart)) {
         try {
-            quantityInStock = await productModel.find({ name: cart[key].name }, 'quantity');
+            quantityInStock = await productModel.findOne({ name: cart[key].name }, 'quantity');
 
             if (quantityInStock < cart[key].quantity) {
                 isValid = false;
                 break;
             }
         } catch (err) {
-            console.error('Error when finding products in database: ', err);
+           next(err);
         }
     }
     return isValid;
@@ -80,7 +62,7 @@ async function updateQuantity(cart) {
             productInStock = await productModel.findOne({ name: cart[key].name });
             updatedQuantity = productInStock.quantity - cart[key].quantity;
         } catch (err) {
-            console.error('Error when finding one product in database: ', err);
+            next(err);
         }
 
         try {
@@ -88,11 +70,11 @@ async function updateQuantity(cart) {
                 { name: cart[key].name },
                 { $set: { quantity: updatedQuantity } }
             );
-        } catch (error) {
-            console.error('Error during update :', error);
+        } catch (err) {
+            next(err);
         }
     }
 }
 
 
-module.exports = { validateCart, getAllProducts };
+module.exports = { checkCart, getAllProducts };
