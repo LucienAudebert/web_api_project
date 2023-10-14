@@ -1,11 +1,11 @@
 import "../index.css"
 
 export default function CartProduct({product}) {
-    //state
+    //State
 
-    //behaviour
+    //Behaviour
 
-    //render
+    //Display
     return (<div className="CartProduct">
         {product.name}<br/>
         Quantity : {product.quantity}
