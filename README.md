@@ -3,7 +3,7 @@
 ## What is this project ?
 This is a small project we did as part of one of our courses. It is a simple **frontend + backend application**, simulating an **e-commerce site** (without payment management).
 
-We used **Mongodb** to create our database, the **React** library for the frontend, and **Node.js** (**Express.js**) for the backend.
+We used **Mongodb** to create our database, the **React** (version 18) library for the frontend, and **Node.js** (**Express.js**) for the backend.
 
 When you launch the application you arrive on a *login* page. You will need to enter your name, e-mail address and geographic address in order to **buy fruits**. You can add fruits to your cart and then click on the *OK* button to go the validation page. 
 
@@ -22,7 +22,7 @@ On this page you can **confirm your order**. This will create a **new User** in 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- **components**: JSX files used by web pages  
 |-- **server**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- **index.js**: entry point of the server, contains all the middlewares  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- **models**: contains the structure of the models stored in the DB and db.js  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- **models**: contains the structure of the models stored in the DB and db.js (used to connect to the DB)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- **routes**: contains routes, enables urls to be redirected to specific controllers  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- **controllers**: contains the files used to process request  
 
@@ -46,7 +46,7 @@ We decided to store 3 things in the DB :
 
 
 ## How to install it
-First of all you will need Mongodb on your computer, you can follow this [link](https://www.mongodb.com/docs/manual/tutorial/) to install it, it only takes a few minutes.
+First of all you will need Mongodb (we used the  Mongodb 7.0 version) on your computer, you can follow this [link](https://www.mongodb.com/docs/manual/tutorial/) to install it, it only takes a few minutes.
 
 After you downloaded this repository, you can go to the ***server*** folder and execute the following command to install all the required packages for the server : 
 `npm install`
