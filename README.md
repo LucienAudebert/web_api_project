@@ -3,7 +3,7 @@
 ## What is this project ?
 This is a small project we did as part of one of our courses. It is a simple **frontend + backend application**, simulating an **e-commerce site** (without payment management).
 
-We used **Mongodb** to create our database, the **React** (version 18) library for the frontend, and **Node.js** (**Express.js**) for the backend.
+We used **Mongodb** to create our database, the **React** library for the frontend, and **Node.js** (with **Express.js**) for the backend.
 
 When you launch the application you arrive on a *login* page. You will need to enter your name, e-mail address and geographic address in order to **buy fruits**. You can add fruits to your cart and then click on the *OK* button to go the validation page. 
 
@@ -45,8 +45,9 @@ We decided to store 3 things in the DB :
     
 
 
-## How to install it
-First of all you will need Mongodb (we used the  Mongodb 7.0 version) on your computer, you can follow this [link](https://www.mongodb.com/docs/manual/tutorial/) to install it, it only takes a few minutes.
+## How to launch the project
+First, you need to install Node.js (***version 18 or more***), you can click [here](https://nodejs.org/fr) to download it.
+Then, you will need to install Mongodb (we used the  Mongodb 7.0 version) on your computer, you can follow this [link](https://www.mongodb.com/docs/manual/tutorial/).
 
 After you downloaded this repository, you can go to the ***server*** folder and execute the following command to install all the required packages for the server : 
 `npm install`
