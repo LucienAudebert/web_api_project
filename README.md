@@ -50,7 +50,7 @@ First, you need to install Node.js (***version 18 or more***), you can click [he
 Then, you will need to install Mongodb (we used the  Mongodb 7.0 version) on your computer, you can follow this [link](https://www.mongodb.com/docs/manual/tutorial/).
 
 After you downloaded this repository, you can go to the ***server*** folder and execute the following command to install all the required packages for the server : 
-`npm install`
+`npm ci`
 
 You can then do the same command in the ***client*** folder.
 
